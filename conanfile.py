@@ -2,7 +2,6 @@ from conans import ConanFile
 import os
 from conans.tools import download
 from conans.tools import unzip
-from conans import CMake
 
 
 class UrgNetworkConan(ConanFile):
@@ -19,12 +18,11 @@ class UrgNetworkConan(ConanFile):
 
 
     def build(self):
-        cmake = CMake(self.settings)
         self.run('cd %s && make'%self.ZIP_FOLDER_NAME)
 
     def package(self):
         # Copying headers
-        self.copy(pattern="*.h", dst="include", src="%s/include" %self.ZIP_FOLDER_NAME, keep_path=True)
+        self.copy(pattern="*.h", dst="include/urg", src="%s/include" %self.ZIP_FOLDER_NAME, keep_path=True)
         # Copying static and dynamic libs
         self.copy(pattern="*.so", dst="lib", src=".", keep_path=False)
 
